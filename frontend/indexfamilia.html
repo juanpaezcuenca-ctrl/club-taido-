@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Familia — Taekwondo Taido</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Open+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="maestro.css">
+</head>
+<body class="maestro-body">
+
+  <header class="topbar">
+    <div class="logo-box">
+      <a href="index.html"><img src="LOGO_CLUB.jpg" alt="Logo Taekwondo Taido"></a>
+    </div>
+    <nav class="topbar-titulo">Panel Familia</nav>
+  </header>
+
+  <div class="maestro-layout">
+    <aside class="maestro-sidebar">
+      <h2 id="nombre-usuario">Familia</h2>
+      <p class="maestro-user" id="correo-usuario"></p>
+      <p class="maestro-user" id="nombre-practicante-sidebar" style="color:var(--dorado);font-weight:600;"></p>
+      <nav class="maestro-nav">
+        <button type="button" data-tab="eventos"  class="active">📅 Eventos</button>
+        <button type="button" data-tab="pagos">💰 Pagos</button>
+        <button type="button" data-tab="informes">📊 Informes</button>
+        <button type="button" data-tab="guias">📚 Guías</button>
+        <button type="button" data-tab="cuenta">⚙️ Mi cuenta</button>
+        <button type="button" id="btn-salir" class="btn-salir">🚪 Cerrar sesión</button>
+      </nav>
+    </aside>
+
+    <main class="maestro-content">
+
+      <!-- ── EVENTOS ── -->
+      <section id="tab-eventos" class="maestro-tab active">
+        <h2>Eventos</h2>
+        <div class="maestro-card"><h3>📍 En curso</h3><div id="lista-eventos-actuales" class="maestro-lista"></div></div>
+        <div class="maestro-card"><h3>🗓️ Próximos</h3><div id="lista-eventos-proximos" class="maestro-lista"></div></div>
+        <div class="maestro-card"><h3>✅ Pasados</h3><div id="lista-eventos-pasados" class="maestro-lista"></div></div>
+      </section>
+
+      <!-- ── PAGOS ── -->
+      <section id="tab-pagos" class="maestro-tab">
+        <h2>Pagos de <span id="nombre-hijo-pagos"></span></h2>
+        <div class="maestro-card">
+          <h3>Registrar pago</h3>
+          <p id="msg-pago" class="maestro-msg"></p>
+          <form id="form-pago">
+            <div class="maestro-grid">
+              <label>Concepto <input name="pago_de" required placeholder="Ej. Mensualidad junio"></label>
+              <label>Monto    <input name="monto" type="number" step="0.01" required></label>
+              <label>Comprobante (imagen)
+                <input name="comprobante" type="file" accept="image/*">
+              </label>
+            </div>
+            <button type="submit" class="btn-maestro">Registrar pago</button>
+          </form>
+        </div>
+        <div class="maestro-card">
+          <h3>Historial de pagos</h3>
+          <div id="lista-pagos" class="maestro-lista"></div>
+        </div>
+      </section>
+
+      <!-- ── INFORMES ── -->
+      <section id="tab-informes" class="maestro-tab">
+        <h2>Informes de <span id="nombre-hijo-informes"></span></h2>
+        <div class="maestro-card">
+          <div id="lista-informes" class="maestro-lista"></div>
+        </div>
+      </section>
+
+      <!-- ── GUÍAS ── -->
+      <section id="tab-guias" class="maestro-tab">
+        <h2>Guías de fundamento</h2>
+        <div class="maestro-card">
+          <div id="lista-guias" class="maestro-lista"></div>
+        </div>
+      </section>
+
+      <!-- ── MI CUENTA ── -->
+      <section id="tab-cuenta" class="maestro-tab">
+        <h2>Mi cuenta</h2>
+        <div class="maestro-card">
+          <h3>Actualizar datos de acceso</h3>
+          <p style="font-size:0.85rem;color:#666;margin-bottom:16px;">Puedes cambiar tu correo y contraseña sin afectar los datos del practicante.</p>
+          <p id="msg-cuenta-familia" class="maestro-msg"></p>
+          <form id="form-cuenta-familia">
+            <div class="maestro-grid">
+              <label>Nuevo correo     <input name="CORREO_NUEVO" type="email" placeholder="Tu correo personal"></label>
+              <label>Nueva contraseña <input name="CONTRASENA"   type="password" placeholder="Dejar vacío para no cambiar"></label>
+            </div>
+            <button type="submit" class="btn-maestro">Guardar cambios</button>
+          </form>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+
+  <script src="auth.js"></script>
+  <script>
+    var sesion = requireSession("familia");
+    if (!sesion) throw new Error("Sin sesión");
+
+    document.getElementById("nombre-usuario").textContent = sesion.nombre || "Familia";
+    document.getElementById("correo-usuario").textContent = sesion.correo || "";
+    bindLogout("btn-salir");
+
+    var idPracticante = null;
+
+    function showMsg(el, text, error) {
+      if (!el) return;
+      el.textContent = text || "";
+      el.className = "maestro-msg" + (text ? (error ? " error" : " ok") : "");
+    }
+
+    function renderTabla(el, datos) {
+      if (!el) return;
+      if (!datos || !datos.length) { el.innerHTML = '<p class="maestro-empty">No hay registros.</p>'; return; }
+      var headers = Object.keys(datos[0]);
+      var html = '<table class="tabla-listado"><thead><tr>';
+      headers.forEach(function(h) { html += '<th>' + h.toUpperCase() + '</th>'; });
+      html += '</tr></thead><tbody>';
+      datos.forEach(function(fila) {
+        html += '<tr>';
+        headers.forEach(function(h) {
+          html += '<td>' + (fila[h] == null ? "" : fila[h]) + '</td>';
+        });
+        html += '</tr>';
+      });
+      html += '</tbody></table>';
+      el.innerHTML = html;
+    }
+
+    function renderTablaPagos(el, datos) {
+      if (!el) return;
+      if (!datos || !datos.length) { el.innerHTML = '<p class="maestro-empty">No hay registros.</p>'; return; }
+      var html = '<table class="tabla-listado"><thead><tr><th>CONCEPTO</th><th>MONTO</th><th>COMPROBANTE</th></tr></thead><tbody>';
+      datos.forEach(function(p) {
+        var comprobante = p.comprobante
+          ? '<a href="' + API + '/uploads/' + encodeURIComponent(p.comprobante) + '" target="_blank">Ver imagen</a>'
+          : '';
+        html += '<tr><td>' + (p.concepto || '') + '</td><td>' + (p.monto || '') + '</td><td>' + comprobante + '</td></tr>';
+      });
+      html += '</tbody></table>';
+      el.innerHTML = html;
+    }
+
+    // FIX 2 y 3: obtener el practicante vinculado automáticamente
+    async function cargarMiPracticante() {
+      try {
+        var res = await fetch(API + "/familia/mi_practicante/" + sesion.id);
+        var data = await res.json();
+        if (data.id) {
+          idPracticante = data.id;
+          var nombre = data.nombre;
+          document.getElementById("nombre-practicante-sidebar").textContent = "👦 " + nombre;
+          document.getElementById("nombre-hijo-pagos").textContent    = nombre;
+          document.getElementById("nombre-hijo-informes").textContent = nombre;
+          cargarPagos();
+          cargarInformes();
+        }
+      } catch (e) { console.error("Error buscando practicante:", e); }
+    }
+
+    async function cargarEventos() {
+      try {
+        var actuales = await fetch(API + "/familia/eventos_actuales").then(function(r){ return r.json(); });
+        var proximos = await fetch(API + "/familia/eventos_proximos").then(function(r){ return r.json(); });
+        var pasados  = await fetch(API + "/familia/eventos_pasados").then(function(r){ return r.json(); });
+        renderTabla(document.getElementById("lista-eventos-actuales"), actuales);
+        renderTabla(document.getElementById("lista-eventos-proximos"), proximos);
+        renderTabla(document.getElementById("lista-eventos-pasados"),  pasados);
+      } catch(e) { console.error("Error eventos:", e); }
+    }
+
+    async function cargarPagos() {
+      if (!idPracticante) return;
+      var el = document.getElementById("lista-pagos");
+      try {
+        var datos = await fetch(API + "/familia/pagos/" + idPracticante).then(function(r){ return r.json(); });
+        renderTablaPagos(el, datos);
+      } catch(e) { el.innerHTML = '<p class="maestro-msg error">Error al cargar pagos.</p>'; }
+    }
+
+    function mostrarTorneo(val) {
+      if (!val || val === "None" || val === "Sin torneo") {
+        return '<em style="color:#aaa;">Sin torneo</em>';
+      }
+      return val;
+    }
+
+    async function cargarInformes() {
+      if (!idPracticante) return;
+      var el = document.getElementById("lista-informes");
+      try {
+        var datos = await fetch(API + "/familia/rendimiento/" + idPracticante).then(function(r){ return r.json(); });
+        if (!datos || !datos.length) { el.innerHTML = '<p class="maestro-empty">No hay informes.</p>'; return; }
+        var html = '<table class="tabla-listado"><thead><tr><th>TORNEO</th><th>COMENTARIOS</th></tr></thead><tbody>';
+        datos.forEach(function(r) {
+          html += '<tr>';
+          html += '<td>' + mostrarTorneo(r.torneo) + '</td>';
+          html += '<td>' + (r.comentarios || "") + '</td>';
+          html += '</tr>';
+        });
+        html += '</tbody></table>';
+        el.innerHTML = html;
+      } catch(e) { el.innerHTML = '<p class="maestro-msg error">Error al cargar informes.</p>'; }
+    }
+
+    // Handler pago familia
+    document.getElementById("form-pago").onsubmit = async function(e) {
+      e.preventDefault();
+      var msg = document.getElementById("msg-pago");
+      if (!idPracticante) { showMsg(msg, "No se encontró el practicante vinculado.", true); return; }
+      var fd = new FormData(e.target);
+      fd.append("id_practicante", idPracticante);
+      try {
+        var res = await fetch(API + "/familia/pago", { method: "POST", body: fd });
+        var data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Error al registrar");
+        showMsg(msg, "Pago registrado correctamente.", false);
+        e.target.reset();
+        cargarPagos();
+      } catch(err) { showMsg(msg, err.message, true); }
+    };
+
+    async function cargarGuias() {
+      var el = document.getElementById("lista-guias");
+      try {
+        var guias = await fetch(API + "/familia/guias").then(function(r){ return r.json(); });
+        if (!guias || !guias.length) { el.innerHTML = '<p class="maestro-empty">No hay guías.</p>'; return; }
+        var html = '<table class="tabla-listado"><thead><tr><th>TÍTULO</th><th>NIVEL</th><th>DESCARGAR</th></tr></thead><tbody>';
+        guias.forEach(function(g) {
+          html += '<tr><td>' + (g.titulo||"") + '</td><td>' + (g.nivel||"") + '</td>';
+          html += '<td><a href="' + API + '/uploads/' + encodeURIComponent(g.url_recurso||"") + '" target="_blank" class="btn-maestro" style="font-size:0.8rem;padding:6px 12px;">📥 Abrir</a></td></tr>';
+        });
+        html += '</tbody></table>';
+        el.innerHTML = html;
+      } catch(e) { el.innerHTML = '<p class="maestro-msg error">Error al cargar guías.</p>'; }
+    }
+
+    // Cuenta
+    document.getElementById("form-cuenta-familia").onsubmit = async function(e) {
+      e.preventDefault();
+      var msg        = document.getElementById("msg-cuenta-familia");
+      var fd         = new FormData(e.target);
+      var nuevoCorreo = fd.get("CORREO_NUEVO").trim();
+      var contrasena  = fd.get("CONTRASENA").trim();
+      if (!nuevoCorreo && !contrasena) { showMsg(msg, "Ingresa al menos un campo.", true); return; }
+      try {
+        var res = await fetch(API + "/familia/actualizar", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ CORREO_ACTUAL: sesion.correo, CORREO_NUEVO: nuevoCorreo || sesion.correo, CONTRASENA: contrasena || null })
+        });
+        var data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Error");
+        if (nuevoCorreo) sesion.correo = nuevoCorreo;
+        showMsg(msg, "Datos actualizados.", false);
+        e.target.reset();
+      } catch(err) { showMsg(msg, err.message, true); }
+    };
+
+    // Navegación
+    document.querySelectorAll(".maestro-nav button[data-tab]").forEach(function(btn) {
+      btn.onclick = function() {
+        var tab = btn.getAttribute("data-tab");
+        document.querySelectorAll(".maestro-nav button[data-tab]").forEach(function(b) { b.classList.toggle("active", b === btn); });
+        document.querySelectorAll(".maestro-tab").forEach(function(s) { s.classList.toggle("active", s.id === "tab-" + tab); });
+        if (tab === "eventos")  cargarEventos();
+        if (tab === "pagos")    cargarPagos();
+        if (tab === "informes") cargarInformes();
+        if (tab === "guias")    cargarGuias();
+      };
+    });
+
+    cargarEventos();
+    // Cargar practicante de forma no bloqueante
+    cargarMiPracticante();
+  </script>
+</body>
+</html>

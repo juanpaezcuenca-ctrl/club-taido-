@@ -1,0 +1,308 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Open+Sans:wght@400;500&display=swap');
+
+:root {
+  --azul:         #0d1b4c;
+  --azul-claro:   #162060;
+  --dorado:       #d7a437;
+  --dorado-claro: #f0c060;
+  --blanco:       #ffffff;
+  --gris-fondo:   #eef1f8;
+  --gris-borde:   #e2e8f0;
+  --error-bg:     #fde8e8;
+  --error-txt:    #a82828;
+  --ok-bg:        #e8f5e9;
+  --ok-txt:       #2e7d32;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+.maestro-body {
+  font-family: 'Open Sans', sans-serif;
+  background: var(--gris-fondo);
+  min-height: 100vh;
+}
+
+.topbar {
+  height: 64px;
+  background: var(--blanco);
+  border-bottom: 2px solid var(--gris-borde);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.logo-box img { height: 40px; object-fit: contain; }
+
+.topbar-titulo {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  color: var(--azul);
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.maestro-layout {
+  display: grid;
+  grid-template-columns: 230px 1fr;
+  height: calc(100vh - 64px);
+  overflow: hidden;
+}
+
+.maestro-sidebar {
+  background: var(--azul);
+  color: var(--blanco);
+  padding: 28px 14px;
+  height: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.maestro-sidebar h2 {
+  font-family: 'Montserrat', sans-serif;
+  color: var(--dorado);
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.maestro-user {
+  font-size: 0.78rem;
+  opacity: 0.7;
+  margin-bottom: 20px;
+  word-break: break-all;
+}
+
+.maestro-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.maestro-nav button {
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,0.85);
+  text-align: left;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: background 0.2s, color 0.2s;
+}
+
+.maestro-nav button.active,
+.maestro-nav button:hover {
+  background: var(--dorado);
+  color: var(--azul);
+}
+
+.maestro-nav .btn-salir {
+  margin-top: auto;
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.7);
+}
+
+.maestro-nav .btn-salir:hover {
+  background: #c0392b;
+  color: var(--blanco);
+}
+
+.maestro-content {
+  padding: 28px;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.maestro-tab {
+  display: none;
+}
+
+.maestro-tab.active {
+  display: block;
+  animation: entrarTab 0.3s ease;
+}
+
+@keyframes entrarTab {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.maestro-tab > h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--azul);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 3px solid var(--dorado);
+  padding-bottom: 10px;
+  margin-bottom: 24px;
+}
+
+.maestro-card {
+  background: var(--blanco);
+  border-radius: 12px;
+  padding: 22px 24px;
+  margin-bottom: 20px;
+  border-left: 4px solid var(--azul);
+  box-shadow: 0 2px 10px rgba(13,27,76,0.06);
+}
+
+.maestro-card h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--azul);
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.maestro-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.maestro-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--azul);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.maestro-grid input,
+.maestro-grid select,
+.maestro-grid textarea {
+  padding: 9px 11px;
+  border: 1.5px solid #d0d8e8;
+  border-radius: 7px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.88rem;
+  color: #333;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.maestro-grid input:focus,
+.maestro-grid select:focus,
+.maestro-grid textarea:focus {
+  border-color: var(--dorado);
+  box-shadow: 0 0 0 3px rgba(215,164,55,0.15);
+}
+
+.maestro-grid textarea {
+  grid-column: 1 / -1;
+  min-height: 80px;
+  resize: vertical;
+}
+
+.btn-maestro {
+  background: var(--dorado);
+  color: var(--azul);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  letter-spacing: 0.3px;
+}
+
+.btn-maestro:hover  { background: var(--dorado-claro); }
+.btn-maestro:active { transform: scale(0.97); }
+
+.btn-maestro.btn-secondary {
+  background: var(--gris-borde);
+  color: var(--azul);
+  margin-left: 8px;
+}
+
+.btn-maestro.btn-danger {
+  background: #c0392b;
+  color: var(--blanco);
+}
+
+.btn-link-del {
+  background: none;
+  border: none;
+  color: #c0392b;
+  cursor: pointer;
+  font-size: 0.82rem;
+  text-decoration: underline;
+  margin-left: 10px;
+}
+
+.maestro-msg {
+  font-size: 0.88rem;
+  border-radius: 7px;
+  margin-bottom: 10px;
+}
+
+.maestro-msg.error { background: var(--error-bg); color: var(--error-txt); padding: 10px 12px; }
+.maestro-msg.ok    { background: var(--ok-bg);    color: var(--ok-txt);    padding: 10px 12px; }
+
+.maestro-lista { margin-top: 10px; }
+
+.tabla-listado {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.tabla-listado th {
+  background: var(--azul);
+  color: var(--blanco);
+  padding: 10px 12px;
+  text-align: left;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tabla-listado td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--gris-borde);
+  color: #333;
+  word-break: break-word;
+}
+
+.tabla-listado tr:last-child td { border-bottom: none; }
+.tabla-listado tr:hover td      { background: #f8faff; }
+
+.maestro-empty { color: #888; font-size: 0.88rem; }
+
+
+@media (max-width: 768px) {
+  .maestro-layout {
+    grid-template-columns: 1fr;
+    height: auto;
+    overflow: visible;
+  }
+  .maestro-sidebar {
+    height: auto;
+    padding: 16px;
+  }
+  .maestro-nav { flex-direction: row; flex-wrap: wrap; }
+  .maestro-content { height: auto; padding: 16px; }
+}

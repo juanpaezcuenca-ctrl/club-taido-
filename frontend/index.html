@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Taekwondo Taido</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Inter:wght@400;600&family=Montserrat:wght@600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo-box">
+      <img src="LOGO_CLUB.jpg" alt="Logo del club">
+    </div>
+
+    <nav class="menu">
+      <a href="index.html">INICIO</a>
+      <a href="nosotros.html">NOSOTROS</a>
+      <a href="equipo.html">EQUIPO</a>
+      <a href="inscripcion.html" class="btn-ingresar">INSCRIBIRSE</a>
+      <a href="login.html" class="btn-ingresar">INICIAR SESIÓN</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="inicio" class="hero">
+      <div class="carousel">
+        <div class="slide active" style="background-image: url('imagen_fondo_index.JPG');"></div>
+        <div class="slide" style="background-image: url('FOTO_BABYS.png');"></div>
+        <div class="slide" style="background-image: url('POOMSAE.png');"></div>
+        <div class="slide" style="background-image: url('MAESTROS2.JPG');"></div>
+      </div>
+      <button class="carousel-btn prev" type="button" aria-label="Imagen anterior">&#10094;</button>
+      <button class="carousel-btn next" type="button" aria-label="Siguiente imagen">&#10095;</button>
+      <div class="carousel-dots" aria-label="Indicadores del carrusel"></div>
+
+      <div class="hero-overlay">
+        <h1>BIENVENIDOS</h1>
+        <span class="hero-subtitle">CLUB TAEKWONDO TAIDO</span>
+        <p class="hero-slogan">El secreto para conquistar el mundo es sonreír</p>
+      </div>
+    </section>
+
+    <section id="clases" class="section groups">
+      <div class="section-heading">
+        <h2>Grupos de Trabajo</h2>
+        <p>Selecciona la categoría para visualizar su espacio de clases.</p>  
+        <br>
+      </div>
+
+      <div class="tabs" role="tablist" aria-label="Grupos de trabajo">
+        <button class="tab-btn active" type="button" role="tab" aria-selected="true" data-target="babys">Babys</button>
+        <button class="tab-btn" type="button" role="tab" aria-selected="false" data-target="cadetes">Cadetes</button>
+        <button class="tab-btn" type="button" role="tab" aria-selected="false" data-target="junior">Junior</button>
+        <button class="tab-btn" type="button" role="tab" aria-selected="false" data-target="senior">Senior</button>
+      </div>
+
+      <div class="tab-panels">
+        <article id="babys" class="tab-panel active" role="tabpanel">
+          <h3>Babys<br>(4 años hasta 6 años)</h3>
+          <div class="class-grid">
+            <div class="class-card image-slot">
+              <img src="COMPETENCIA _BABYS.png" alt="Imagen del grupo Babys">
+            </div>
+            <div class="info_texto">
+              <p>Cada gran camino comienza con un primer paso. Nuestro programa de Taekwondo para niños de 4 a 6 años está diseñado para acompañar a tu hijo en sus primeros logros, fortaleciendo su confianza, disciplina y amor por el aprendizaje en un entorno seguro y lleno de cuidado.
+                Más que una actividad, es un espacio donde crecen felices, seguros y con valores que los acompañarán toda la vida.
+                Regálale esta experiencia desde hoy. Cupos limitados.</p>
+              <a href="inscripcion.html" class="btn-primary"style="margin-top: 15px;" font-size: 14px;>INSCRIBIRSE</a>
+            </div>
+          </div>
+          <br>
+          <P>DESARROLLA SU COORDINACION Y DISIPLINA DESDE PEQUEÑOS</P>
+        </article>
+
+        <article id="cadetes" class="tab-panel" role="tabpanel">
+          <h3>Cadetes<br>(7 años hasta 11 años)</h3>
+          <div class="class-grid">
+            <div class="class-card image-slot">
+              <img src="GRUPO_CADETES.jpg" alt="Imagen del grupo Cadetes">
+            </div>
+            <div class="info_texto">
+              <p>Aquí es donde comienzan a formarse los líderes del mañana. Nuestro programa de Taekwondo para niños de 7 a 11 años desarrolla disciplina, confianza y capacidad de liderazgo, en un entorno seguro que impulsa la toma de decisiones, el respeto y el trabajo en equipo.
+                A través de un acompañamiento especializado, cada niño fortalece su carácter y aprende a guiar con el ejemplo, dentro y fuera del tatami.
+                Invierte en su futuro desde hoy. Cupos limitados.</p>
+              <a href="inscripcion.html" class="btn-primary"style="margin-top: 15px;" font-size: 14px;>INSCRIBIRSE</a>
+            </div>
+          </div>
+          <br>
+          <P>FORTALECE SU CONFIANZA Y TRABAJO EN EQUIPO</P>
+        </article>
+
+        <article id="junior" class="tab-panel" role="tabpanel">
+          <h3>Junior<br>(12 años hasta 18 años)</h3>
+          <div class="class-grid">
+            <div class="class-card image-slot">
+              <img src="GRUPO_JUNIOR.PNG" alt="Imagen del grupo Junior">
+            </div>
+            <div class="info_texto">
+              <p>Competir también es crecer como persona. Nuestro programa de Taekwondo para jóvenes de 12 a 18 años integra la preparación competitiva con el desarrollo humano, fortaleciendo la disciplina, la inteligencia emocional y el respeto por sí mismos y por los demás.
+                Acompañamos a cada joven en su proceso, ayudándolo a descubrir su potencial, gestionar sus retos y construir un carácter sólido dentro y fuera del tatami.
+                Formamos competidores, pero sobre todo, mejores personas. Cupos limitados.</p>
+              <a href="inscripcion.html" class="btn-primary"style="margin-top: 15px;" font-size: 14px;>INSCRIBIRSE</a>
+            </div>
+          </div>
+          <br>
+          <P>POTENCIA TU CARACTER Y CONFIANZA</P>
+        </article>
+
+        <article id="senior" class="tab-panel" role="tabpanel">
+          <h3>Senior<br>(desde 18 años en adelante)</h3>
+          <div class="class-grid">
+            <div class="class-card image-slot">
+              <img src="GRUPO_SENIOIR.png" alt="Imagen del grupo Senior">
+            </div>
+            <div class="info_texto">
+              <p>unca es tarde para superarte. Nuestro programa de Taekwondo para adultos está diseñado para quienes buscan más que entrenar: un espacio para fortalecer cuerpo y mente, liberar el estrés y reconectar con su disciplina interior.
+
+                Con un enfoque integral, acompañamos tu proceso respetando tu ritmo, desarrollando confianza, autocontrol y bienestar en cada sesión.
+                Más que un entrenamiento, es un camino de crecimiento personal. Cupos limitados.</p>
+              <a href="inscripcion.html" class="btn-primary"style="margin-top: 15px;" font-size: 14px;>INSCRIBIRSE</a>
+            </div>
+          </div>
+          <br>
+          <P>NO OLVIDES TU CUERPO Y MEJORA TU CONDICION FISICA</P>
+        </article>
+      </div>
+    </section>
+
+    <section id="legado" class="section legacy">
+      <div class="section-heading">
+        <h2>JURAMENTO</h2>
+      </div>
+
+      <div class="legacy-grid">
+        <div class="legacy-item">1. Cortesía</div>
+        <div class="legacy-item">2. Integridad</div>
+        <div class="legacy-item">3. Autocontrol</div>
+        <div class="legacy-item">4. Perseverancia</div>
+        <div class="legacy-item">5. Espíritu Deportivo</div>
+        <div class="legacy-item">6. Espíritu Indomable</div>
+        <div class="legacy-item">7. Ciencia</div>
+        <div class="legacy-item">8. Amor</div>
+      </div>
+      <br>
+      <br>
+      <center><h2 class="taekwondo-title">TAEKWONDO</center>
+
+      <div id="inscripcion" class="legacy-cta">
+        <a class="btn-primary" href="inscripcion.html">Inscríbete ahora</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-brand">
+      <img src="LOGO_CLUB.jpg" alt="Logo del club Taekwondo Taido">
+      <p>Club Taekwondo Taido</p>
+    </div>
+
+    <div class="footer-info">
+      <h4>Contacto</h4>
+      <p>Tel: (+57) 300 000 0000</p>
+      <P>Tel: (+57) 300 000 0001</P>
+      <p>Email: contacto@ejemplo.com</p>
+    </div>
+
+    <div class="footer-info">
+      <h4>Sede Fontibón</h4>
+      <p>Calle 23d #103a, Bogotá</p>
+    </div>
+
+    <div class="footer-info">
+      <h4>Sede Suba</h4>
+      <p>Calle 136 #100-40, Bogotá</p>
+    </div>
+
+    <div class="footer-info">
+      <h4>Redes Sociales</h4>
+      <div class="social-links">
+        <a href="https://www.instagram.com/club.taido?igsh=MzJnNHY3Mm1laDZ6" aria-label="Instagram">Instagram</a>
+        <a href="https://www.facebook.com/share/18Syv1NTuM/" aria-label="Facebook">Facebook</a>
+        <a href="https://youtube.com/@taekwondotaido?si=BRqdXbSMBOPxIsAs" aria-label="YouTube">YouTube</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const slides = document.querySelectorAll(".slide");
+    const dotsContainer = document.querySelector(".carousel-dots");
+    const prevBtn = document.querySelector(".carousel-btn.prev");
+    const nextBtn = document.querySelector(".carousel-btn.next");
+    const tabButtons = document.querySelectorAll(".tab-btn");
+    const tabPanels = document.querySelectorAll(".tab-panel");
+    let activeIndex = 0;
+    let intervalId;
+
+    if (!slides.length || !dotsContainer || !prevBtn || !nextBtn) {
+      console.warn("Carrusel: faltan elementos en el HTML.");
+    }
+
+    slides.forEach((_, index) => {
+      const dot = document.createElement("button");
+      dot.type = "button";
+      dot.className = "dot";
+      dot.setAttribute("aria-label", `Ir a imagen ${index + 1}`);
+      dot.addEventListener("click", () => {
+        showSlide(index);
+        restartAutoPlay();
+      });
+      dotsContainer.appendChild(dot);
+    });
+
+    const dots = document.querySelectorAll(".dot");
+
+    function showSlide(index) {
+      slides[activeIndex].classList.remove("active");
+      dots[activeIndex].classList.remove("active");
+      activeIndex = (index + slides.length) % slides.length;
+      slides[activeIndex].classList.add("active");
+      dots[activeIndex].classList.add("active");
+    }
+
+    function nextSlide() {
+      showSlide(activeIndex + 1);
+    }
+
+    function prevSlide() {
+      showSlide(activeIndex - 1);
+    }
+
+    function restartAutoPlay() {
+      clearInterval(intervalId);
+      intervalId = setInterval(nextSlide, 2000);
+    }
+
+    prevBtn.addEventListener("click", () => {
+      prevSlide();
+      restartAutoPlay();
+    });
+
+    nextBtn.addEventListener("click", () => {
+      nextSlide();
+      restartAutoPlay();
+    });
+
+    if (dots.length) {
+      dots[0].classList.add("active");
+      restartAutoPlay();
+    }
+
+    tabButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const targetId = button.dataset.target;
+
+        tabButtons.forEach((btn) => {
+          btn.classList.remove("active");
+          btn.setAttribute("aria-selected", "false");
+        });
+
+        tabPanels.forEach((panel) => {
+          panel.classList.remove("active");
+        });
+
+        button.classList.add("active");
+        button.setAttribute("aria-selected", "true");
+        document.getElementById(targetId).classList.add("active");
+      });
+    });
+
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Practicante — Taekwondo Taido</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Open+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="maestro.css">
+</head>
+<body class="maestro-body">
+
+  <header class="topbar">
+    <div class="logo-box">
+      <a href="index.html"><img src="LOGO_CLUB.jpg" alt="Logo Taekwondo Taido"></a>
+    </div>
+    <nav class="topbar-titulo">Panel Practicante</nav>
+  </header>
+
+  <div class="maestro-layout">
+
+    <aside class="maestro-sidebar">
+      <h2 id="nombre-usuario">Practicante</h2>
+      <p class="maestro-user" id="correo-usuario"></p>
+      <nav class="maestro-nav">
+        <button type="button" data-tab="eventos"  class="active">📅 Eventos</button>
+        <button type="button" data-tab="guias">📚 Guías</button>
+        <button type="button" data-tab="informes">📊 Mis informes</button>
+        <button type="button" data-tab="pagos">💰 Mis pagos</button>
+        <button type="button" data-tab="cuenta">⚙️ Mi cuenta</button>
+        <button type="button" id="btn-salir" class="btn-salir">🚪 Cerrar sesión</button>
+      </nav>
+    </aside>
+
+    <main class="maestro-content">
+
+      <!-- ── EVENTOS ── -->
+      <section id="tab-eventos" class="maestro-tab active">
+        <h2>Eventos</h2>
+
+        <div class="maestro-card">
+          <h3>📍 En curso</h3>
+          <div id="lista-eventos-actuales" class="maestro-lista"></div>
+        </div>
+        <div class="maestro-card">
+          <h3>🗓️ Próximos</h3>
+          <div id="lista-eventos-proximos" class="maestro-lista"></div>
+        </div>
+        <div class="maestro-card">
+          <h3>✅ Pasados</h3>
+          <div id="lista-eventos-pasados" class="maestro-lista"></div>
+        </div>
+      </section>
+
+      <!-- ── GUÍAS ── -->
+      <section id="tab-guias" class="maestro-tab">
+        <h2>Guías de fundamento</h2>
+        <div class="maestro-card">
+          <h3>Material disponible</h3>
+          <div id="lista-guias" class="maestro-lista"></div>
+        </div>
+      </section>
+
+      <!-- ── INFORMES ── -->
+      <section id="tab-informes" class="maestro-tab">
+        <h2>Mis informes de rendimiento</h2>
+        <div class="maestro-card">
+          <div id="lista-informes" class="maestro-lista"></div>
+        </div>
+      </section>
+
+      <!-- ── PAGOS ── -->
+      <section id="tab-pagos" class="maestro-tab">
+        <h2>Registrar pago</h2>
+        <div class="maestro-card">
+          <p id="msg-pago" class="maestro-msg"></p>
+          <form id="form-pago">
+            <div class="maestro-grid">
+              <label>Concepto <input name="pago_de" required placeholder="Ej. Mensualidad junio"></label>
+              <label>Monto    <input name="monto" type="number" step="0.01" required></label>
+              <label>Comprobante (foto)
+                <input name="comprobante" type="file" accept="image/*">
+              </label>
+            </div>
+            <button type="submit" class="btn-maestro">Registrar pago</button>
+          </form>
+        </div>
+        <div class="maestro-card">
+          <h3>Mis pagos</h3>
+          <div id="lista-pagos" class="maestro-lista"></div>
+        </div>
+      </section>
+
+      <!-- ── MI CUENTA ── -->
+      <section id="tab-cuenta" class="maestro-tab">
+        <h2>Mi cuenta</h2>
+        <div class="maestro-card">
+          <h3>Cambiar contraseña</h3>
+          <p id="msg-cuenta" class="maestro-msg"></p>
+          <form id="form-cuenta">
+            <div class="maestro-grid">
+              <label>Nueva contraseña <input name="CONTRASENA" type="password" required></label>
+            </div>
+            <button type="submit" class="btn-maestro">Guardar cambios</button>
+          </form>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+
+  <script src="auth.js"></script>
+  <script>
+    var sesion = requireSession("practicante");
+    if (!sesion) { throw new Error("Sin sesión"); }
+
+    document.getElementById("nombre-usuario").textContent = sesion.nombre || "Practicante";
+    document.getElementById("correo-usuario").textContent = sesion.correo || "";
+    bindLogout("btn-salir");
+
+    function showMsg(el, text, error) {
+      if (!el) return;
+      el.textContent = text || "";
+      el.className = "maestro-msg" + (text ? (error ? " error" : " ok") : "");
+    }
+
+    function renderTabla(el, datos, ocultar) {
+      if (!el) return;
+      if (!datos || !datos.length) {
+        el.innerHTML = '<p class="maestro-empty">No hay registros.</p>';
+        return;
+      }
+      var omitir = ocultar || [];
+      var headers = Object.keys(datos[0]).filter(function (h) { return omitir.indexOf(h) === -1; });
+      var html = '<table class="tabla-listado"><thead><tr>';
+      headers.forEach(function (h) { html += '<th>' + h.toUpperCase() + '</th>'; });
+      html += '</tr></thead><tbody>';
+      datos.forEach(function (fila) {
+        html += '<tr>';
+        headers.forEach(function (h) { html += '<td>' + (fila[h] == null ? "" : fila[h]) + '</td>'; });
+        html += '</tr>';
+      });
+      html += '</tbody></table>';
+      el.innerHTML = html;
+    }
+
+    function renderTablaPagos(el, datos) {
+      if (!el) return;
+      if (!datos || !datos.length) {
+        el.innerHTML = '<p class="maestro-empty">No hay registros.</p>';
+        return;
+      }
+      var html = '<table class="tabla-listado"><thead><tr><th>CONCEPTO</th><th>MONTO</th><th>COMPROBANTE</th></tr></thead><tbody>';
+      datos.forEach(function (p) {
+        var comprobante = p.comprobante
+          ? '<a href="' + API + '/uploads/' + encodeURIComponent(p.comprobante) + '" target="_blank">Ver imagen</a>'
+          : '';
+        html += '<tr><td>' + (p.concepto || '') + '</td><td>' + (p.monto || '') + '</td><td>' + comprobante + '</td></tr>';
+      });
+      html += '</tbody></table>';
+      el.innerHTML = html;
+    }
+
+    async function cargarEventos() {
+      try {
+        var actuales = await fetch(API + "/eventos_actuales").then(function (r) { return r.json(); });
+        var proximos = await fetch(API + "/eventos_proximos").then(function (r) { return r.json(); });
+        var pasados  = await fetch(API + "/eventos_pasados").then(function (r) { return r.json(); });
+        renderTabla(document.getElementById("lista-eventos-actuales"), actuales);
+        renderTabla(document.getElementById("lista-eventos-proximos"), proximos);
+        renderTabla(document.getElementById("lista-eventos-pasados"),  pasados);
+      } catch (e) { console.error("Error eventos:", e); }
+    }
+
+    // FIX 1: guías con botón de descarga
+    async function cargarGuias() {
+      var el = document.getElementById("lista-guias");
+      try {
+        var guias = await fetch(API + "/obtener/guias").then(function (r) { return r.json(); });
+        if (!guias || !guias.length) {
+          el.innerHTML = '<p class="maestro-empty">No hay guías disponibles.</p>';
+          return;
+        }
+        var html = '<table class="tabla-listado"><thead><tr><th>ID</th><th>TÍTULO</th><th>NIVEL</th><th>DESCARGAR</th></tr></thead><tbody>';
+        guias.forEach(function (g) {
+          var url = API + "/uploads/" + encodeURIComponent(g.url_recurso || g[2] || "");
+          var nombre = g.titulo || g[1] || "Guía";
+          html += '<tr><td>' + (g.id || g[0]) + '</td><td>' + nombre + '</td><td>' + (g.nivel || g[2] || "") + '</td>';
+          html += '<td><a href="' + url + '" target="_blank" class="btn-maestro" style="font-size:0.8rem;padding:6px 12px;">📥 Abrir</a></td></tr>';
+        });
+        html += '</tbody></table>';
+        el.innerHTML = html;
+      } catch (e) { el.innerHTML = '<p class="maestro-msg error">Error al cargar guías.</p>'; }
+    }
+
+    function mostrarTorneo(val) {
+      if (!val || val === "None" || val === "Sin torneo") {
+        return '<em style="color:#aaa;">Sin torneo</em>';
+      }
+      return val;
+    }
+
+    async function cargarInformes() {
+      var el = document.getElementById("lista-informes");
+      try {
+        var datos = await fetch(API + "/familia/rendimiento/" + sesion.id).then(function (r) { return r.json(); });
+        if (!datos || !datos.length) { el.innerHTML = '<p class="maestro-empty">No hay informes.</p>'; return; }
+        var html = '<table class="tabla-listado"><thead><tr><th>TORNEO</th><th>COMENTARIOS</th></tr></thead><tbody>';
+        datos.forEach(function(r) {
+          html += '<tr>';
+          html += '<td>' + mostrarTorneo(r.torneo) + '</td>';
+          html += '<td>' + (r.comentarios || "") + '</td>';
+          html += '</tr>';
+        });
+        html += '</tbody></table>';
+        el.innerHTML = html;
+      } catch (e) { el.innerHTML = '<p class="maestro-msg error">Error al cargar informes.</p>'; }
+    }
+
+    // FIX 3: pagos del practicante
+    async function cargarMisPagos() {
+      var el = document.getElementById("lista-pagos");
+      try {
+        var datos = await fetch(API + "/familia/pagos/" + sesion.id).then(function (r) { return r.json(); });
+        renderTablaPagos(el, datos);
+      } catch (e) { el.innerHTML = '<p class="maestro-msg error">Error al cargar pagos.</p>'; }
+    }
+
+    document.getElementById("form-pago").onsubmit = async function (e) {
+      e.preventDefault();
+      var msg = document.getElementById("msg-pago");
+      var fd  = new FormData(e.target);
+      fd.append("id_practicante", sesion.id);
+      try {
+        var res = await fetch(API + "/familia/pago", { method: "POST", body: fd });
+        var data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Error al registrar");
+        showMsg(msg, "Pago registrado correctamente.", false);
+        e.target.reset();
+        cargarMisPagos();
+      } catch (err) { showMsg(msg, err.message, true); }
+    };
+
+    document.getElementById("form-cuenta").onsubmit = async function (e) {
+      e.preventDefault();
+      var msg = document.getElementById("msg-cuenta");
+      var fd  = new FormData(e.target);
+      try {
+        var res = await fetch(API + "/actualizar", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ CORREO: sesion.correo, CONTRASENA: fd.get("CONTRASENA") })
+        });
+        var data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Error al actualizar");
+        showMsg(msg, "Contraseña actualizada.", false);
+        e.target.reset();
+      } catch (err) { showMsg(msg, err.message, true); }
+    };
+
+    // Navegación por tabs
+    document.querySelectorAll(".maestro-nav button[data-tab]").forEach(function (btn) {
+      btn.onclick = function () {
+        var tab = btn.getAttribute("data-tab");
+        document.querySelectorAll(".maestro-nav button[data-tab]").forEach(function (b) {
+          b.classList.toggle("active", b === btn);
+        });
+        document.querySelectorAll(".maestro-tab").forEach(function (sec) {
+          sec.classList.toggle("active", sec.id === "tab-" + tab);
+        });
+        if (tab === "eventos")  cargarEventos();
+        if (tab === "guias")    cargarGuias();
+        if (tab === "informes") cargarInformes();
+        if (tab === "pagos")    cargarMisPagos();
+      };
+    });
+
+    cargarEventos();
+  </script>
+</body>
+</html>

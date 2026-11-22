@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Maestro — Taekwondo Taido</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Open+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="maestro.css">
+</head>
+<body class="maestro-body">
+
+  <header class="topbar">
+    <div class="logo-box"><a href="index.html"><img src="LOGO_CLUB.jpg" alt="Logo"></a></div>
+    <nav class="topbar-titulo">Panel Maestro</nav>
+  </header>
+
+  <div class="maestro-layout">
+    <aside class="maestro-sidebar">
+      <h2 id="nombre-maestro">Maestro</h2>
+      <p class="maestro-user" id="correo-maestro"></p>
+      <nav class="maestro-nav">
+        <button type="button" data-tab="maestros"     class="active">👨‍🏫 Maestros</button>
+        <button type="button" data-tab="practicantes">🥋 Practicantes</button>
+        <button type="button" data-tab="eventos">📅 Eventos</button>
+        <button type="button" data-tab="pagos">💰 Pagos</button>
+        <button type="button" data-tab="informes">📊 Informes</button>
+        <button type="button" data-tab="guias">📚 Guías</button>
+        <button type="button" id="btn-salir" class="btn-salir">🚪 Cerrar sesión</button>
+      </nav>
+    </aside>
+
+    <main class="maestro-content">
+
+      <!-- ── MAESTROS ── -->
+      <section id="tab-maestros" class="maestro-tab active">
+        <h2>Maestros</h2>
+        <div class="maestro-card">
+          <h3>Nuevo maestro</h3>
+          <p id="msg-maestro" class="maestro-msg"></p>
+          <form id="form-maestro">
+            <div class="maestro-grid">
+              <label>Nombre     <input name="nombre"    required></label>
+              <label>Correo     <input name="correo"    type="email" required></label>
+              <label>Contraseña <input name="contrasena" type="password" required></label>
+            </div>
+            <button type="submit" class="btn-maestro">Crear maestro</button>
+          </form>
+        </div>
+        <div class="maestro-card">
+          <h3>Buscar y gestionar maestros</h3>
+          <div class="search-bar">
+            <input type="text" id="buscar-maestro" placeholder="Buscar por nombre…">
+            <button type="button" class="btn-maestro" id="btn-buscar-maestro">Buscar</button>
+            <button type="button" class="btn-maestro btn-secondary" id="btn-todos-maestros">Ver todos</button>
+          </div>
+          <div id="lista-maestros" class="maestro-lista"></div>
+        </div>
+        <!-- Formulario editar maestro -->
+        <div class="maestro-card" id="edit-maestro-card" style="display:none;border-left-color:#d7a437;">
+          <h3>✏️ Editar maestro</h3>
+          <p id="msg-edit-maestro" class="maestro-msg"></p>
+          <form id="form-edit-maestro">
+            <input type="hidden" id="edit-maestro-id">
+            <div class="maestro-grid">
+              <label>Nombre     <input id="edit-maestro-nombre" required></label>
+              <label>Correo     <input id="edit-maestro-correo" type="email" required></label>
+              <label>Contraseña <input id="edit-maestro-contrasena" type="password" placeholder="Dejar vacío para no cambiar"></label>
+            </div>
+            <button type="submit" class="btn-maestro">Guardar cambios</button>
+            <button type="button" class="btn-maestro btn-secondary" id="cancel-edit-maestro">Cancelar</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- ── PRACTICANTES ── -->
+      <section id="tab-practicantes" class="maestro-tab">
+        <h2>Practicantes</h2>
+        <div class="maestro-card">
+          <h3>Nuevo practicante</h3>
+          <p id="msg-practicante" class="maestro-msg"></p>
+          <form id="form-practicante">
+            <div class="maestro-grid">
+              <label>Nombre     <input name="NOMBRE"     required></label>
+              <label>Correo     <input name="CORREO"     type="email" required></label>
+              <label>Actividad
+                <select name="ACTIVIDAD">
+                  <option>Activo</option>
+                  <option>No activo</option>
+                </select>
+              </label>
+              <label>Contraseña <input name="CONTRASENA" type="password" required></label>
+            </div>
+            <p style="font-size:0.8rem;color:#888;margin-bottom:12px;">La familia se creará automáticamente con el apellido del practicante.</p>
+            <button type="submit" class="btn-maestro">Crear practicante</button>
+          </form>
+          <div id="info-familia-creada" style="display:none;margin-top:16px;" class="maestro-card" style="border-left-color:#2e7d32;">
+            <h3>✅ Datos creados</h3>
+            <div id="detalle-creacion"></div>
+          </div>
+        </div>
+        <div class="maestro-card">
+          <h3>Buscar y gestionar practicantes</h3>
+          <div class="search-bar">
+            <input type="text" id="buscar-practicante" placeholder="Buscar por nombre…">
+            <button type="button" class="btn-maestro" id="btn-buscar-practicante">Buscar</button>
+            <button type="button" class="btn-maestro btn-secondary" id="btn-todos-practicantes">Ver todos</button>
+          </div>
+          <div id="lista-practicantes" class="maestro-lista"></div>
+        </div>
+        <div class="maestro-card" id="edit-practicante-card" style="display:none;border-left-color:#d7a437;">
+          <h3>✏️ Editar practicante</h3>
+          <p id="msg-edit-practicante" class="maestro-msg"></p>
+          <form id="form-edit-practicante">
+            <input type="hidden" id="edit-prac-id">
+            <div class="maestro-grid">
+              <label>Nombre     <input id="edit-prac-nombre" required></label>
+              <label>Correo     <input id="edit-prac-correo" type="email" required></label>
+              <label>Actividad
+                <select id="edit-prac-actividad">
+                  <option>Activo</option>
+                  <option>No activo</option>
+                </select>
+              </label>
+              <label>Contraseña <input id="edit-prac-contrasena" type="password" placeholder="Dejar vacío para no cambiar"></label>
+            </div>
+            <button type="submit" class="btn-maestro">Guardar cambios</button>
+            <button type="button" class="btn-maestro btn-secondary" id="cancel-edit-practicante">Cancelar</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- ── EVENTOS ── -->
+      <section id="tab-eventos" class="maestro-tab">
+        <h2>Eventos</h2>
+        <div class="maestro-card">
+          <h3>Nuevo evento</h3>
+          <p id="msg-evento" class="maestro-msg"></p>
+          <form id="form-evento">
+            <div class="maestro-grid">
+              <label>Título <input name="NOMBRE" required></label>
+              <label>Fecha del torneo <input name="FECHA" type="date" required></label>
+              <label>Tipo <input name="TIPO" required placeholder="Ej: Torneo, Seminario"></label>
+            </div>
+            <p style="font-size:0.8rem;color:#888;margin-bottom:12px;">El estado se calcula automáticamente según la fecha.</p>
+            <button type="submit" class="btn-maestro">Publicar evento</button>
+          </form>
+        </div>
+        <div class="maestro-card">
+          <h3>Buscar y gestionar eventos</h3>
+          <div class="search-bar">
+            <input type="text" id="buscar-evento" placeholder="Buscar por título…">
+            <button type="button" class="btn-maestro" id="btn-buscar-evento">Buscar</button>
+            <button type="button" class="btn-maestro btn-secondary" id="btn-todos-eventos">Ver todos</button>
+          </div>
+          <div id="lista-eventos" class="maestro-lista"></div>
+        </div>
+        <div class="maestro-card" id="edit-evento-card" style="display:none;border-left-color:#d7a437;">
+          <h3>✏️ Editar evento</h3>
+          <p id="msg-edit-evento" class="maestro-msg"></p>
+          <form id="form-edit-evento">
+            <input type="hidden" id="edit-evento-id">
+            <div class="maestro-grid">
+              <label>Título <input id="edit-evento-nombre" required></label>
+              <label>Fecha  <input id="edit-evento-fecha" type="date" required></label>
+              <label>Tipo   <input id="edit-evento-tipo" required></label>
+            </div>
+            <button type="submit" class="btn-maestro">Guardar cambios</button>
+            <button type="button" class="btn-maestro btn-secondary" id="cancel-edit-evento">Cancelar</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- ── PAGOS ── -->
+      <section id="tab-pagos" class="maestro-tab">
+        <h2>Pagos</h2>
+        <div class="maestro-card">
+          <h3>Buscar por nombre de practicante</h3>
+          <div class="search-bar">
+            <input type="text" id="buscar-pago-id" placeholder="Nombre del practicante…">
+            <button type="button" class="btn-maestro" id="btn-buscar-pago">Buscar</button>
+            <button type="button" class="btn-maestro btn-secondary" id="btn-todos-pagos">Ver todos</button>
+          </div>
+          <div id="lista-pagos" class="maestro-lista"></div>
+        </div>
+      </section>
+
+      <!-- ── INFORMES ── -->
+      <section id="tab-informes" class="maestro-tab">
+        <h2>Informes de rendimiento</h2>
+        <div class="maestro-card">
+          <h3>Publicar informe</h3>
+          <p id="msg-informe" class="maestro-msg"></p>
+          <form id="form-informe">
+            <div class="maestro-grid">
+              <label>Buscar practicante
+                <input type="text" id="buscar-prac-informe" placeholder="Escribe el nombre…" autocomplete="off">
+                <div id="sugerencias-informe" class="sugerencias"></div>
+                <input type="hidden" id="id-prac-informe">
+              </label>
+              <label>Torneo / Evento
+                <select id="select-eventos-informe">
+                  <option value="">Seleccione un torneo…</option>
+                </select>
+              </label>
+              <label>Comentarios <textarea id="comentarios-informe" required></textarea></label>
+            </div>
+            <button type="submit" class="btn-maestro">Publicar informe</button>
+          </form>
+        </div>
+        <div class="maestro-card">
+          <h3>Informes publicados</h3>
+          <div id="lista-informes" class="maestro-lista"></div>
+        </div>
+      </section>
+
+      <!-- ── GUÍAS ── -->
+      <section id="tab-guias" class="maestro-tab">
+        <h2>Guías de fundamento</h2>
+        <div class="maestro-card">
+          <h3>Publicar guía</h3>
+          <p id="msg-guia" class="maestro-msg"></p>
+          <form id="form-guia">
+            <div class="maestro-grid">
+              <label>Título <input name="titulo" required></label>
+              <label>Archivo (PDF / Word) <input name="url_recursos" type="file" accept=".pdf,.docx,.doc" required></label>
+              <label>Nivel
+                <select name="nivel">
+                  <option>PRINCIPIANTE</option>
+                  <option>AVANZADOS</option>
+                  <option>NEGROS</option>
+                </select>
+              </label>
+            </div>
+            <button type="submit" class="btn-maestro">Publicar guía</button>
+          </form>
+        </div>
+        <div class="maestro-card">
+          <h3>Guías publicadas</h3>
+          <div id="lista-guias" class="maestro-lista"></div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <style>
+    .search-bar { display:flex; gap:8px; margin-bottom:14px; flex-wrap:wrap; }
+    .search-bar input { flex:1; min-width:150px; padding:9px 12px; border:1.5px solid #d0d8e8; border-radius:7px; font-family:'Open Sans',sans-serif; font-size:0.88rem; outline:none; }
+    .search-bar input:focus { border-color:#d7a437; }
+    .sugerencias { position:absolute; background:#fff; border:1px solid #d0d8e8; border-radius:7px; z-index:100; width:100%; max-height:200px; overflow-y:auto; box-shadow:0 4px 12px rgba(0,0,0,0.1); }
+    .sugerencias div { padding:10px 14px; cursor:pointer; font-size:0.88rem; }
+    .sugerencias div:hover { background:#f0f4ff; }
+    label { position:relative; }
+    textarea { width:100%; min-height:80px; padding:9px 11px; border:1.5px solid #d0d8e8; border-radius:7px; font-family:'Open Sans',sans-serif; font-size:0.88rem; resize:vertical; }
+    textarea:focus { border-color:#d7a437; outline:none; }
+    .btn-danger { background:#c0392b !important; color:#fff !important; }
+    .btn-edit   { background:#0d1b4c; color:#fff; border:none; padding:5px 10px; border-radius:6px; cursor:pointer; font-size:0.78rem; margin-right:4px; }
+    .btn-del    { background:#c0392b; color:#fff; border:none; padding:5px 10px; border-radius:6px; cursor:pointer; font-size:0.78rem; }
+  </style>
+
+  <script src="auth.js"></script>
+  <script src="maestro.js"></script>
+</body>
+</html>

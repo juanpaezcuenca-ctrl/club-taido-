@@ -1,0 +1,311 @@
+<!doctype html>
+
+<!-- Formulario de contacto / inscripción. Indispensable: form + script que llama al backend en puerto 3000. -->
+
+<html lang="es">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Inscripción / Contacto - Taekwondo Taido</title>
+
+  <link rel="stylesheet" href="styles.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Inter:wght@400;600&family=Montserrat:wght@600;800&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+
+
+  <!-- Menú igual que en las demás páginas -->
+
+  <header class="topbar">
+
+    <div class="logo-box">
+
+      <img src="LOGO_CLUB.jpg" alt="Logo del club">
+
+    </div>
+
+    <nav class="menu">
+
+      <a href="index.html">INICIO</a>
+
+      <a href="nosotros.html">NOSOTROS</a>
+
+      <a href="equipo.html">EQUIPO</a>
+
+      <a href="inscripcion.html" class="btn-ingresar">INSCRIBIRSE</a>
+      <a href="login.html" class="btn-ingresar">INICIAR SESIÓN</a>
+
+    </nav>
+
+  </header>
+
+
+
+  <main>
+
+    <section class="section contact-page-section">
+
+      <div class="section-heading-center">
+
+        <h2>INSCRIPCIÓN Y CONTACTO</h2>
+
+        <p class="subtitle">Déjanos tus datos y te contactaremos.</p>
+
+      </div>
+
+
+
+      <div class="contact-form-layout">
+
+        <div class="contact-form-card">
+
+          <!-- id="form-contacto-publico" es indispensable: el script lo busca al enviar -->
+
+          <form id="form-contacto-publico" class="contact-form" novalidate>
+
+            <div class="field">
+
+              <label for="nombre"><span>Nombre completo</span></label>
+
+              <input id="nombre" name="nombre" type="text" required maxlength="100" autocomplete="name" placeholder="Tu nombre">
+
+            </div>
+
+            <div class="field">
+
+              <label for="correo"><span>Correo electrónico</span></label>
+
+              <input id="correo" name="correo" type="email" required maxlength="150" autocomplete="email" placeholder="correo@ejemplo.com">
+
+            </div>
+
+            <div class="field">
+
+              <label for="telefono"><span>Teléfono</span></label>
+
+              <input id="telefono" name="telefono" type="tel" required maxlength="20" autocomplete="tel" placeholder="Ej. 3001234567">
+
+            </div>
+
+            <div class="field">
+
+              <label for="sede"><span>Sede de interés</span></label>
+
+              <select id="sede" name="sede" required>
+
+                <option value="" disabled selected>Selecciona una opción</option>
+
+                <option value="Fontibón">Fontibón — Calle 23d #103a</option>
+
+                <option value="Suba">Suba — Calle 136 #100-40</option>
+
+                <option value="Consultar / ambas sedes">Consultar / ambas sedes</option>
+
+              </select>
+
+            </div>
+
+            <div class="field">
+
+              <label for="texto"><span>Mensaje o consulta</span></label>
+
+              <textarea id="texto" name="texto" required rows="5" maxlength="4000" placeholder="Edad del practicante, horario deseado, experiencia previa, etc."></textarea>
+
+            </div>
+
+            <!-- Aquí se muestra éxito o error al usuario -->
+
+            <p id="form-contacto-status" class="form-contacto-status" role="status" aria-live="polite"></p>
+
+            <button type="submit" class="btn-primary auth-submit" id="form-contacto-submit">Enviar</button>
+
+          </form>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+
+  <footer class="footer">
+
+    <div class="footer-brand">
+
+      <img src="LOGO_CLUB.jpg" alt="Logo del club Taekwondo Taido">
+
+      <p>Club Taekwondo Taido</p>
+
+    </div>
+
+    <div class="footer-info">
+
+      <h4>Contacto</h4>
+
+      <p>Tel: (+57) 300 000 0000</p>
+
+      <p>Tel: (+57) 300 000 0001</p>
+
+      <p>Email: contacto@ejemplo.com</p>
+
+    </div>
+
+    <div class="footer-info">
+
+      <h4>Sede Fontibón</h4>
+
+      <p>Calle 23d #103a, Bogotá</p>
+
+    </div>
+
+    <div class="footer-info">
+
+      <h4>Sede Suba</h4>
+
+      <p>Calle 136 #100-40, Bogotá</p>
+
+    </div>
+
+    <div class="footer-info">
+
+      <h4>Redes Sociales</h4>
+
+      <div class="social-links">
+
+        <a href="https://www.instagram.com/club.taido?igsh=MzJnNHY3Mm1laDZ6" aria-label="Instagram">Instagram</a>
+
+        <a href="https://www.facebook.com/share/18Syv1NTuM/" aria-label="Facebook">Facebook</a>
+
+        <a href="https://youtube.com/@taekwondotaido?si=BRqdXbSMBOPxIsAs" aria-label="YouTube">YouTube</a>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+
+
+  <script>
+
+    (function () {
+
+      var API = 'http://127.0.0.1:5000';
+
+      var form = document.getElementById('form-contacto-publico');
+
+      var statusEl = document.getElementById('form-contacto-status');
+
+      var submitBtn = document.getElementById('form-contacto-submit');
+
+
+
+      form.addEventListener('submit', async function (e) {
+
+        e.preventDefault();
+
+        statusEl.classList.remove('form-contacto-status--error');
+
+
+
+        /* Campos que el backend espera (mismos nombres en app.py) */
+
+        var body = {
+
+          nombre: document.getElementById('nombre').value.trim(),
+
+          correo: document.getElementById('correo').value.trim(),
+
+          telefono: document.getElementById('telefono').value.trim(),
+
+          sede: document.getElementById('sede').value.trim(),
+
+          texto: document.getElementById('texto').value.trim()
+
+        };
+
+        if (!body.nombre || !body.correo || !body.telefono || !body.sede || !body.texto) {
+
+          statusEl.textContent = 'Por favor completa todos los campos.';
+
+          statusEl.classList.add('form-contacto-status--error');
+
+          return;
+
+        }
+
+
+
+        submitBtn.disabled = true;
+
+        statusEl.textContent = 'Enviando…';
+
+        try {
+
+          /* POST a /publico/formulario-contacto: guarda en MySQL y envía correo */
+
+          var res = await fetch(API + '/publico/formulario-contacto', {
+
+            method: 'POST',
+
+            headers: { 'Content-Type': 'application/json' },
+
+            body: JSON.stringify(body)
+
+          });
+
+          var data = await res.json();
+
+          if (!res.ok) {
+
+            statusEl.textContent = data.error || 'No se pudo enviar tu mensaje. Intenta de nuevo más tarde.';
+
+            statusEl.classList.add('form-contacto-status--error');
+
+            return;
+
+          }
+
+          statusEl.textContent = data.mensaje;
+
+          form.reset();
+
+        } catch (_) {
+
+          /* Falla si el backend no está encendido o hay error de red */
+
+          statusEl.textContent = 'No se pudo enviar tu mensaje. Intenta de nuevo más tarde.';
+
+          statusEl.classList.add('form-contacto-status--error');
+
+        } finally {
+
+          submitBtn.disabled = false;
+
+        }
+
+      });
+
+    })();
+
+  </script>
+
+</body>
+
+</html>
+

@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iniciar sesión — Taekwondo Taido</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Open+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="login.css">
+</head>
+<body>
+  <div class="login-wrapper">
+
+    <div class="login-banner">
+      <div class="logo-circle">
+        <img src="LOGO_CLUB.jpg" alt="Logo Taekwondo Taido">
+      </div>
+      <div class="divider-gold"></div>
+      <h2>Taekwondo<br>Taido</h2>
+      <p>Bienvenido al sistema de gestión del club.<br>Ingresa con tus credenciales para acceder a tu panel.</p>
+    </div>
+
+    <div class="login-card">
+      <h1>Iniciar sesión</h1>
+
+      <form id="form-login-unificado">
+        <label class="field">
+          <span>Soy…</span>
+          <select id="rol" required>
+            <option value="">Selecciona tu rol</option>
+            <option value="maestro">Maestro</option>
+            <option value="familia">Familia</option>
+            <option value="practicante">Practicante</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>Correo electrónico</span>
+          <input type="email" id="correo" required autocomplete="username" placeholder="ejemplo@correo.com">
+        </label>
+        <label class="field">
+          <span>Contraseña</span>
+          <input type="password" id="contrasena" required autocomplete="current-password" placeholder="••••••••">
+        </label>
+
+        <p id="msg-login"></p>
+        <button type="submit" class="btn-entrar">Entrar</button>
+        <a href="index.html" class="volver-link">← Volver al sitio</a>
+      </form>
+    </div>
+
+  </div>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Open+Sans:wght@400;500&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --azul:         #0d1b4c;
+  --dorado:       #d7a437;
+  --dorado-claro: #f0c060;
+  --blanco:       #ffffff;
+  --error:        #c0392b;
+  --ok:           #2e7d32;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--azul);
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(215,164,55,0.15) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(215,164,55,0.10) 0%, transparent 50%);
+  padding: 24px;
+}
+
+.login-wrapper {
+  display: flex;
+  width: 100%;
+  max-width: 900px;
+  min-height: 520px;
+  border-radius: 20px;
+  overflow: visible;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+  clip-path: none;
+}
+
+/* Panel izquierdo decorativo */
+.login-banner {
+  flex: 1;
+  background: linear-gradient(145deg, #0a1438 0%, #162060 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 36px;
+  border-right: 1px solid rgba(215,164,55,0.2);
+  gap: 24px;
+  overflow: visible;
+  position: relative;
+  z-index: 1;
+}
+
+.login-banner .logo-circle {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 4px solid var(--dorado);
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: 0 0 0 6px rgba(215,164,55,0.25), 0 8px 24px rgba(0,0,0,0.3);
+  flex-shrink: 0;
+}
+
+.login-banner .logo-circle img {
+  width: 105%;
+  height: 105%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.login-banner h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--dorado);
+  text-align: center;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+.login-banner p {
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.55);
+  text-align: center;
+  line-height: 1.7;
+}
+
+.divider-gold {
+  width: 50px;
+  height: 3px;
+  background: var(--dorado);
+  border-radius: 2px;
+}
+
+/* Panel derecho — formulario */
+.login-card {
+  flex: 1;
+  background: var(--blanco);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 48px 40px;
+}
+
+.login-card h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--azul);
+  margin-bottom: 6px;
+}
+
+.login-card .subtitulo {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 32px;
+  line-height: 1.5;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+
+.field span {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--azul);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.field input,
+.field select {
+  padding: 12px 14px;
+  border: 1.5px solid #dde2ee;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: 'Open Sans', sans-serif;
+  color: #333;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+  background: #fff;
+}
+
+.field input:focus,
+.field select:focus {
+  border-color: var(--dorado);
+  box-shadow: 0 0 0 3px rgba(215,164,55,0.15);
+}
+
+#msg-login {
+  font-size: 0.88rem;
+  border-radius: 6px;
+  padding: 0;
+  min-height: 0;
+  margin-bottom: 4px;
+  transition: all 0.2s;
+}
+
+#msg-login.error { background: #fde8e8; color: var(--error); padding: 10px 12px; margin-bottom: 10px; }
+#msg-login.ok    { background: #e8f5e9; color: var(--ok);    padding: 10px 12px; margin-bottom: 10px; }
+
+.btn-entrar {
+  width: 100%;
+  padding: 13px;
+  background: var(--dorado);
+  color: var(--azul);
+  border: none;
+  border-radius: 8px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  transition: background 0.2s, transform 0.1s;
+  margin-top: 8px;
+}
+
+.btn-entrar:hover  { background: var(--dorado-claro); }
+.btn-entrar:active { transform: scale(0.98); }
+
+.volver-link {
+  display: block;
+  text-align: center;
+  margin-top: 16px;
+  font-size: 0.85rem;
+  color: #888;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.volver-link:hover { color: var(--azul); }
+
+@media (max-width: 640px) {
+  .login-banner { display: none; }
+  .login-card   { padding: 36px 24px; }
+}
+  </style>
+  <script src="auth.js"></script>
+</body>
+</html>
